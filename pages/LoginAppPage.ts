@@ -1,49 +1,60 @@
 import { Page, Locator } from '@playwright/test';
 
 export class LoginAppPage {
-  readonly page!: Page;
-  readonly root!: Locator;
+  private readonly page: Page;
+  private readonly root: Locator;
 
-  // Email input
-  readonly email: Locator = this.root.locator('#email');
-
-  // Password input
-  readonly password: Locator = this.root.locator('#password');
-
-  // Login button
-  readonly login: Locator = this.root.locator('button[type="submit"]');
-
-  // Sign Up link
-  readonly signUp: Locator = this.root.locator('a[href="#signup"]');
-
-  // Error message
-  readonly errorMessage: Locator = this.root.locator('[role="alert"]');
+  // Locators for login inputs and buttons
+  private readonly emailInput: Locator;
+  private readonly passwordInput: Locator;
+  private readonly loginButton: Locator;
+  private readonly logoutButton: Locator;
+  private readonly signUpLink: Locator;
+  private readonly errorMsg: Locator;
 
   constructor(page: Page, root?: Locator) {
     this.page = page;
     this.root = root || page.locator('body');
+
+    this.emailInput = this.root.locator('#email');
+    this.passwordInput = this.root.locator('#password');
+    this.loginButton = this.root.locator('button[type="submit"]');
+    this.logoutButton = this.root.locator('button[data-testid="logout"]');
+    this.signUpLink = this.root.locator('a[href="#signup"]');
+    this.errorMsg = this.root.locator('[role="alert"]');
   }
 
   async goto(): Promise<void> {
     await this.page.goto('https://testregr5.github.io/login-app-ai-sdlc/');
   }
 
-  async performLogin(email: string, password: string): Promise<void> {
-    await this.email.fill(email);
-    await this.password.fill(password);
-    await this.login.click();
+  async login(email: string, password: string): Promise<void> {
+    await this.emailInput.fill(email);
+    await this.passwordInput.fill(password);
+    await this.loginButton.click();
+  }
+
+  async logout(): Promise<void> {
+    await this.logoutButton.waitFor({ state: 'visible', timeout: 5000 });
+    await this.logoutButton.click();
+  }
+
+  async error(): Promise<string | null> {
+    if (await this.errorMsg.isVisible()) {
+      return await this.errorMsg.textContent();
+    }
+    return null;
   }
 
   async verifyMainElements(): Promise<void> {
-    await this.email.waitFor({ state: 'visible' });
-    await this.password.waitFor({ state: 'visible' });
-    await this.login.waitFor({ state: 'visible' });
-    await this.signUp.waitFor({ state: 'visible' });
+    await this.emailInput.waitFor({ state: 'visible' });
+    await this.passwordInput.waitFor({ state: 'visible' });
+    await this.loginButton.waitFor({ state: 'visible' });
+    await this.signUpLink.waitFor({ state: 'visible' });
   }
 
-  async getErrorMessage(): Promise<string | null> {
-    if (await this.errorMessage.isVisible())
-      return await this.errorMessage.textContent();
-    return null;
+  async navigateToSignUp(): Promise<void> {
+    await this.signUpLink.waitFor({ state: 'visible' });
+    await this.signUpLink.click();
   }
 }
