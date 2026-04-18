@@ -1,32 +1,48 @@
-<!DOdocument.getElementById("loginForm").addEventListener("submit", function(e) {
-e.preventDefault();
-
-const username = document.getElementById("username").value;
-const password = document.getElementById("password").value;
-
-if (username === "admin" && password === "1234") {
-document.getElementById("message").innerText = "Welcome";
-} else {
-document.getElementById("message").innerText = "Invalid credentials";
-}
-});CTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Login App</title>
 </head>
 <body>
+    <main>
+        <h1>Login</h1>
 
-<h2>Login Page</h2>
+        <form id="loginForm" novalidate aria-describedby="message">
+            <div>
+                <label for="username">Username</label><br />
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    autocomplete="username"
+                    required
+                    inputmode="text"
+                />
+            </div>
 
-<form id="loginForm">
-    <input type="text" id="username" placeholder="Username" required><br><br>
-    <input type="password" id="password" placeholder="Password" required><br><br>
-    <button type="submit">Login</button>
-</form>
+            <br />
 
-<p id="message"></p>
+            <div>
+                <label for="password">Password</label><br />
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    autocomplete="current-password"
+                    required
+                />
+            </div>
 
-<script src="script.js"></script>
+            <br />
 
+            <button type="submit">Login</button>
+        </form>
+
+        <p id="message" role="status" aria-live="polite"></p>
+    </main>
+
+    <script src="script.js"></script>
 </body>
 </html>
