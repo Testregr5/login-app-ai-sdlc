@@ -1,21 +1,53 @@
 (function () {
     "use strict";
 
-    function $(id) {
+    /**
+     * Returns the element by ID.
+     * @param {string} id 
+     * @returns {HTMLElement|null}
+     */
+    const $ = function (id) {
         return document.getElementById(id);
-    }
+    };
 
-    function setText(el, text) {
+    /**
+     * Sets the text content of an element, or clears if none provided.
+     * @param {HTMLElement|null} el
+     * @param {string} text
+     */
+    const setText = function (el, text) {
         if (el) el.innerText = text || "";
-    }
+    };
 
-    function setVisible(el, visible) {
+    /**
+     * Sets element visibility via display and hidden property.
+     * @param {HTMLElement|null} el
+     * @param {boolean} visible
+     */
+    const setVisible = function (el, visible) {
         if (!el) return;
         el.style.display = visible ? "" : "none";
         el.hidden = !visible;
-    }
+    };
 
-    function init() {
+    // Valid credentials as constants
+    const VALID_USERNAME = "admin";
+    const VALID_PASSWORD = "1234";
+
+    /**
+     * Validates username and password against constants.
+     * @param {string} username
+     * @param {string} password
+     * @returns {boolean}
+     */
+    const isValidCredentials = function (username, password) {
+        return username === VALID_USERNAME && password === VALID_PASSWORD;
+    };
+
+    /**
+     * Initializes login app after DOMContentLoaded event.
+     */
+    const init = function () {
         // Cache elements after DOM is ready (repo search expects this pattern)
         const loginView = $("loginView");
         const appView = $("appView");
@@ -26,25 +58,25 @@
         const message = $("message");
         const logoutBtn = $("logoutBtn");
 
-        function clearInputs() {
+        const clearInputs = function () {
             if (usernameInput) usernameInput.value = "";
             if (passwordInput) passwordInput.value = "";
-        }
+        };
 
-        function clearMessages() {
+        const clearMessages = function () {
             setText(loginMessage, "");
             setText(message, "");
-        }
+        };
 
-        function showLoginView() {
+        const showLoginView = function () {
             setVisible(loginView, true);
             setVisible(appView, false);
-        }
+        };
 
-        function showAppView() {
+        const showAppView = function () {
             setVisible(loginView, false);
             setVisible(appView, true);
-        }
+        };
 
         // Initial state
         showLoginView();
@@ -57,7 +89,7 @@
                 const username = usernameInput ? usernameInput.value : "";
                 const password = passwordInput ? passwordInput.value : "";
 
-                if (username === "admin" && password === "1234") {
+                if (isValidCredentials(username, password)) {
                     setText(message, "Welcome");
                     setText(loginMessage, "");
                     showAppView();
@@ -79,7 +111,7 @@
                 showLoginView();
             });
         }
-    }
+    };
 
     document.addEventListener("DOMContentLoaded", init);
 })();
