@@ -4,44 +4,76 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Login</title>
+    <meta name="description" content="Login page for secure access." />
   </head>
   <body>
     <main>
-      <h1>Login</h1>
+      <h1 id="loginTitle">Login</h1>
 
-      <form id="loginForm" method="post" novalidate aria-describedby="message">
-        <div>
-          <label for="username">Username</label><br />
-          <input
-            type="text"
-            id="username"
-            name="username"
-            autocomplete="username"
-            required
-          />
-        </div>
+      <form 
+        id="loginForm" 
+        method="post" 
+        novalidate 
+        aria-describedby="message" 
+        aria-labelledby="loginTitle"
+      >
+        <fieldset aria-label="Login form">
+          <legend class="sr-only">Login Form</legend>
+          <div>
+            <label for="username">Username</label><br />
+            <input
+              type="text"
+              id="username"
+              name="username"
+              autocomplete="username"
+              required
+              aria-required="true"
+              aria-label="Username"
+            />
+          </div>
 
-        <br />
+          <br />
 
-        <div>
-          <label for="password">Password</label><br />
-          <input
-            type="password"
-            id="password"
-            name="password"
-            autocomplete="current-password"
-            required
-          />
-        </div>
+          <div>
+            <label for="password">Password</label><br />
+            <input
+              type="password"
+              id="password"
+              name="password"
+              autocomplete="current-password"
+              required
+              aria-required="true"
+              aria-label="Password"
+            />
+          </div>
 
-        <br />
+          <br />
 
-        <button type="submit">Login</button>
+          <button type="submit" aria-label="Submit login information">Login</button>
+        </fieldset>
       </form>
 
-      <div id="message" role="status" aria-live="polite"></div>
+      <div 
+        id="message" 
+        role="status" 
+        aria-live="polite" 
+        aria-hidden="true"
+        tabindex="-1"
+      ></div>
     </main>
 
+    <style>
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0,0,0,0);
+        border: 0;
+      }
+    </style>
     <script src="script.js"></script>
   </body>
 </html>
