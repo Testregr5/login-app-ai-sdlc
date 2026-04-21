@@ -16,7 +16,7 @@
     }
 
     function init() {
-        // Cache elements after DOM is ready (repo search expects this pattern)
+        // Cache elements after DOM is ready
         const loginView = $("loginView");
         const appView = $("appView");
         const loginForm = $("loginForm");
@@ -73,7 +73,6 @@
             logoutBtn.addEventListener("click", function (e) {
                 if (e && typeof e.preventDefault === "function") e.preventDefault();
 
-                // Ensure "Welcome" is not displayed after logout
                 clearMessages();
                 clearInputs();
                 showLoginView();
