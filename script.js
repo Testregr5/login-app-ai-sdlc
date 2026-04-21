@@ -1,22 +1,50 @@
 (function () {
     "use strict";
 
+    // Constants for credentials and messages
+    const VALID_USERNAME = "admin";
+    const VALID_PASSWORD = "1234";
+    const MESSAGE_WELCOME = "Welcome";
+    const MESSAGE_INVALID_CREDENTIALS = "Invalid credentials";
+
+    // Helper to get element by ID
     function $(id) {
         return document.getElementById(id);
     }
 
-    function setText(el, text) {
-        if (el) el.innerText = text || "";
+    function setText(element, text) {
+        if (element) element.innerText = text || "";
     }
 
-    function setVisible(el, visible) {
-        if (!el) return;
-        el.style.display = visible ? "" : "none";
-        el.hidden = !visible;
+    function setVisible(element, visible) {
+        if (!element) return;
+        element.style.display = visible ? "" : "none";
+        element.hidden = !visible;
+    }
+
+    function clearInput(element) {
+        if (element) element.value = "";
+    }
+
+    function clearAllInputs(inputs) {
+        inputs.forEach(clearInput);
+    }
+
+    function clearMessages(elements) {
+        elements.forEach(el => setText(el, ""));
+    }
+
+    function showView(showElement, hideElement) {
+        setVisible(showElement, true);
+        setVisible(hideElement, false);
+    }
+
+    function credentialsAreValid(username, password) {
+        return username === VALID_USERNAME && password === VALID_PASSWORD;
     }
 
     function init() {
-        // Cache elements after DOM is ready (repo search expects this pattern)
+        // Cache elements after DOM is ready
         const loginView = $("loginView");
         const appView = $("appView");
         const loginForm = $("loginForm");
@@ -26,29 +54,9 @@
         const message = $("message");
         const logoutBtn = $("logoutBtn");
 
-        function clearInputs() {
-            if (usernameInput) usernameInput.value = "";
-            if (passwordInput) passwordInput.value = "";
-        }
-
-        function clearMessages() {
-            setText(loginMessage, "");
-            setText(message, "");
-        }
-
-        function showLoginView() {
-            setVisible(loginView, true);
-            setVisible(appView, false);
-        }
-
-        function showAppView() {
-            setVisible(loginView, false);
-            setVisible(appView, true);
-        }
-
         // Initial state
-        showLoginView();
-        clearMessages();
+        showView(loginView, appView);
+        clearMessages([loginMessage, message]);
 
         if (loginForm) {
             loginForm.addEventListener("submit", function (e) {
@@ -57,14 +65,14 @@
                 const username = usernameInput ? usernameInput.value : "";
                 const password = passwordInput ? passwordInput.value : "";
 
-                if (username === "admin" && password === "1234") {
-                    setText(message, "Welcome");
+                if (credentialsAreValid(username, password)) {
+                    setText(message, MESSAGE_WELCOME);
                     setText(loginMessage, "");
-                    showAppView();
+                    showView(appView, loginView);
                 } else {
-                    setText(loginMessage, "Invalid credentials");
+                    setText(loginMessage, MESSAGE_INVALID_CREDENTIALS);
                     setText(message, "");
-                    showLoginView();
+                    showView(loginView, appView);
                 }
             });
         }
@@ -74,9 +82,9 @@
                 if (e && typeof e.preventDefault === "function") e.preventDefault();
 
                 // Ensure "Welcome" is not displayed after logout
-                clearMessages();
-                clearInputs();
-                showLoginView();
+                clearMessages([loginMessage, message]);
+                clearAllInputs([usernameInput, passwordInput]);
+                showView(loginView, appView);
             });
         }
     }
