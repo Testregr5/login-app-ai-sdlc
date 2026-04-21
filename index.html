@@ -8,40 +8,66 @@
   <body>
     <main>
       <h1>Login</h1>
+      <p id="welcome-message" aria-live="polite" class="visually-hidden">
+        Welcome! Please sign in to continue.
+      </p>
 
-      <form id="loginForm" method="post" novalidate aria-describedby="message">
+      <form
+        id="loginForm"
+        method="post"
+        novalidate
+        aria-describedby="welcome-message message"
+      >
         <div>
-          <label for="username">Username</label><br />
+          <label for="username" id="username-label">
+            Username
+          </label><br />
           <input
             type="text"
             id="username"
             name="username"
             autocomplete="username"
             required
+            aria-labelledby="username-label"
+            aria-required="true"
+            aria-invalid="false"
           />
         </div>
 
         <br />
 
         <div>
-          <label for="password">Password</label><br />
+          <label for="password" id="password-label">
+            Password
+          </label><br />
           <input
             type="password"
             id="password"
             name="password"
             autocomplete="current-password"
             required
+            aria-labelledby="password-label"
+            aria-required="true"
+            aria-invalid="false"
           />
         </div>
 
         <br />
 
-        <button type="submit">Login</button>
+        <button type="submit" aria-label="Login to your account">Login</button>
       </form>
 
       <p id="message" role="status" aria-live="polite"></p>
     </main>
 
+    <style>
+      .visually-hidden {
+        position: absolute !important;
+        height: 1px; width: 1px; overflow: hidden;
+        clip: rect(1px, 1px, 1px, 1px);
+        white-space: nowrap;
+      }
+    </style>
     <script src="script.js"></script>
   </body>
 </html>
