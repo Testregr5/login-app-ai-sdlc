@@ -9,37 +9,44 @@
     <main>
         <h1>Login</h1>
 
-        <form id="loginForm" method="post" novalidate aria-describedby="message">
-            <div>
-                <label for="username">Username</label><br />
-                <input
-                    type="text"
-                    id="username"
-                    name="username"
-                    autocomplete="username"
-                    required
-                />
-            </div>
+        <section id="loginSection" aria-label="Login">
+            <form id="loginForm" method="post" novalidate aria-describedby="loginMessage">
+                <div>
+                    <label for="username">Username</label><br />
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        autocomplete="username"
+                        required
+                    />
+                </div>
 
-            <br />
+                <br />
 
-            <div>
-                <label for="password">Password</label><br />
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    autocomplete="current-password"
-                    required
-                />
-            </div>
+                <div>
+                    <label for="password">Password</label><br />
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        autocomplete="current-password"
+                        required
+                    />
+                </div>
 
-            <br />
+                <br />
 
-            <button type="submit">Login</button>
-        </form>
+                <button type="submit">Login</button>
+            </form>
 
-        <p id="message" role="status" aria-live="polite"></p>
+            <p id="loginMessage" role="status" aria-live="polite"></p>
+        </section>
+
+        <section id="appSection" aria-label="App" hidden>
+            <p id="message" role="status" aria-live="polite"></p>
+            <button type="button" id="logoutBtn">Logout</button>
+        </section>
     </main>
 
     <script src="script.js"></script>
