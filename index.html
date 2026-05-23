@@ -3,71 +3,66 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Login</title>
+    <title>Login Application</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <main>
-      <h1>Login</h1>
-      <p id="welcome-message" aria-live="polite" class="visually-hidden">
-        Welcome! Please sign in to continue.
-      </p>
+    <!-- Login View -->
+    <div id="login-view" class="view">
+      <main>
+        <h1>Login</h1>
+        
+        <form id="login-form" novalidate>
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              data-test-id="username"
+              autocomplete="username"
+              required
+              aria-required="true"
+            />
+          </div>
 
-      <form
-        id="loginForm"
-        method="post"
-        novalidate
-        aria-describedby="welcome-message message"
-      >
-        <div>
-          <label for="username" id="username-label">
-            Username
-          </label><br />
-          <input
-            type="text"
-            id="username"
-            name="username"
-            autocomplete="username"
-            required
-            aria-labelledby="username-label"
-            aria-required="true"
-            aria-invalid="false"
-          />
-        </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              data-test-id="password"
+              autocomplete="current-password"
+              required
+              aria-required="true"
+            />
+          </div>
 
-        <br />
+          <button type="submit" data-test-id="login-button">Login</button>
+          
+          <!-- Error message positioned below Login button (FR-008) -->
+          <div 
+            id="error-message" 
+            class="error-message" 
+            role="alert" 
+            aria-live="polite"
+            data-test-id="error-message"
+            style="display: none;"
+          ></div>
+        </form>
+      </main>
+    </div>
 
-        <div>
-          <label for="password" id="password-label">
-            Password
-          </label><br />
-          <input
-            type="password"
-            id="password"
-            name="password"
-            autocomplete="current-password"
-            required
-            aria-labelledby="password-label"
-            aria-required="true"
-            aria-invalid="false"
-          />
-        </div>
+    <!-- Authenticated View (after successful login) -->
+    <div id="authenticated-view" class="view" style="display: none;">
+      <main>
+        <h1>Welcome!</h1>
+        <p data-test-id="welcome-message">You have successfully logged in as <strong>admin</strong>.</p>
+        <button id="logout-button" data-test-id="logout-button">Logout</button>
+      </main>
+    </div>
 
-        <br />
-
-        <button type="submit" aria-label="Login to your account">Login</button>
-      </form>
-
-      <p id="message" role="status" aria-live="polite"></p>
-    </main>
-
-    <style>
-      .visually-hidden {
-        position: absolute !important;
-        height: 1px; width: 1px; overflow: hidden;
-        clip: rect(1px, 1px, 1px, 1px);
-        white-space: nowrap;
-      }
-    </style>
     <script src="script.js"></script>
   </body>
 </html>
